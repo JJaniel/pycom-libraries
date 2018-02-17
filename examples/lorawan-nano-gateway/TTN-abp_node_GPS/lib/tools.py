@@ -41,14 +41,16 @@ def start_GPS():
             print('Lat / Lon: ' + str(my_gps.latitude[0] + (my_gps.latitude[1] / 60)) + ', ' + str(my_gps.longitude[0] + (my_gps.longitude[1] / 60)))
 
 
-def convert_latlon(latitude, longitude):
+def convert_latlon(latitude, longitude, altitude, hdop):
 # latitude = -7.005941
 # longitude = -68.1192
 
     lat = int((latitude + 90)*10000)
     lon = int((longitude + 180)*10000)
+    alt = int((altitude) * 10)
+    lhdop = int((hdop) * 10)
 
-    coords = array.array('B', [0,0,0,0,0,0])
+    coords = array.array('B', [0,0,0,0,0,0,0,0,0])
     coords[0] = lat
     coords[1] = (lat >> 8)
     coords[2] = (lat >> 16)
@@ -56,6 +58,10 @@ def convert_latlon(latitude, longitude):
     coords[3] = lon
     coords[4] = (lon >> 8)
     coords[5] = (lon >> 16)
+
+    coords[6] = alt
+    coords[7] = (alt >> 8)
+    coords[8] = lhdop
 
     return coords
     
